@@ -1,4 +1,4 @@
-# normalize-stripe-emails
+# normalize stripe emails
 force all stripe customer emails to lowercase via API
 
 ## why?
@@ -18,3 +18,8 @@ force all stripe customer emails to lowercase via API
 **run the script** *(bracketed optional arguments)*
 
 `python3 normalize.py [--oversight] [--verbose]`
+
+## notes
+* use at your own risk
+* supports manual approval of changes (with `--oversight` argument)
+* if your customer uses different account and billing emails, this will only change their account email
