@@ -21,5 +21,6 @@ force all stripe customer emails to lowercase via API
 
 ## notes
 * use at your own risk
-* supports manual approval of changes (with `--oversight` argument)
+* supports manual approval of changes (with `--oversight` flag)
+* creates mapping of original emails to new ones, exported to a csv
 * if your customer uses different account and billing emails, this will only change their account email
