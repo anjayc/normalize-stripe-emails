@@ -1,5 +1,5 @@
 # normalize stripe emails
-force all stripe customer emails to lowercase via API
+deal with unsanitized stripe emails easily: force them to lowercase, or save a mapping
 
 ## why?
 * your current customer emails were not case-sanitized on collection
@@ -24,5 +24,6 @@ force all stripe customer emails to lowercase via API
 * supports manual approval of changes (with `--oversight` flag)
 * supports test data generation (with `--testdata` flag)
 * supports "test mode", in which changes are not pushed to stripe (with `--testmode` flag)
+* test mode can also be used to create a mapping, if you'd rather not replace customer data, and would instead like to access it using an external record of lowercase emails
 * creates mapping of original emails to new ones, exported to a csv
 * if your customer uses different account and billing emails, this will only change their account email
