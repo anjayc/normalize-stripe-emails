@@ -15,6 +15,10 @@ deal with unsanitized stripe emails easily: force them to lowercase, or save a m
 
 `pip3 install -r requirements.txt`
 
+**set up stripe API key**
+
+create a text file in the same directory named `.env`, type in `STRIPE_API_KEY=<your API key>`
+
 **run the script** *(optional arguments are bracketed)*
 
 `python3 normalize.py [--oversight] [--verbose] [--testmode] [--testdata]`
@@ -27,3 +31,4 @@ deal with unsanitized stripe emails easily: force them to lowercase, or save a m
 * test mode can also be used to create a mapping, if you'd rather not replace customer data, and would instead like to access it using an external record of lowercase emails
 * creates mapping of original emails to new ones, exported to a csv
 * if your customer uses different account and billing emails, this will only change their account email
+* PRs are welcome
