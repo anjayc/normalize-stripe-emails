@@ -15,12 +15,14 @@ force all stripe customer emails to lowercase via API
 
 `pip3 install -r requirements.txt`
 
-**run the script** *(bracketed optional arguments)*
+**run the script** *(optional arguments are bracketed)*
 
-`python3 normalize.py [--oversight] [--verbose]`
+`python3 normalize.py [--oversight] [--verbose] [--testmode] [--testdata]`
 
 ## notes
 * use at your own risk
 * supports manual approval of changes (with `--oversight` flag)
+* supports test data generation (with `--testdata` flag)
+* supports "test mode", in which changes are not pushed to stripe (with `--testmode` flag)
 * creates mapping of original emails to new ones, exported to a csv
 * if your customer uses different account and billing emails, this will only change their account email
