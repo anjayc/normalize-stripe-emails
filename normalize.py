@@ -28,6 +28,17 @@ def save_mapping(email_mapping):
 	return
 
 
+def import_mapping(mapping_file):
+	"""import mapping of customer IDs and emails from csv file"""
+	mapping = []
+	with open(mapping_file, newline='', encoding="UTF8") as csvfile:
+		reader = csv.reader(csvfile, delimiter=',')
+		for row in reader:
+			if row[0] != "customer id":
+				mapping.append(row)
+	return mapping
+
+
 def normalize_emails(oversight, verbose, test_mode):
 	"""cast existing stripe customer emails to lowercase"""
 	print("checking customer list for uppercase emails...")
@@ -80,6 +91,20 @@ def normalize_emails(oversight, verbose, test_mode):
 	return email_mapping
 
 
+def revert_emails(old_mapping):
+	"""revert previously-normalized customer emails using saved mapping"""
+	print(f"reverting {len(old_mapping)} customer emails to their previous state...")
+	for customer in old_mapping:
+		# if the email actually changed during normalization
+		if customer[1] != customer[2]:
+			# change it back to the old capitalization
+			print(f"reverting {customer[0]} from {customer[2]} to {customer[1]}")
+			stripe.Customer.modify(
+				customer[0],
+				email=customer[1]
+			)
+
+
 def generate_test_customers(quantity, verbose):
 	"""populate stripe test account with a specified number of fake customers"""
 	print(f"adding {quantity} fake customers to stripe test environment...")
@@ -107,6 +132,9 @@ def main(args):
 			raise Exception("You are operating on your live customer data. " +
 							"Please insert your test API key instead.")
 		generate_test_customers(args.testdata, args.verbose)
+	elif args.revert:
+		mapping = import_mapping(args.revert)
+		revert_emails(mapping)
 	else:
 		email_mapping = normalize_emails(args.oversight, args.verbose, args.testmode)
 		save_mapping(email_mapping)
@@ -128,4 +156,6 @@ if __name__ == "__main__":
 						help="amount of fake customers to generate")
 	parser.add_argument("-tm", "--testmode", default=False, action="store_true",
 						help="whether to write results to stripe or not")
+	parser.add_argument("-r", "--revert", type=str, default=None,
+						help="revert customer emails using a previous csv mapping")
 	main(parser.parse_args())

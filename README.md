@@ -21,14 +21,15 @@ create a text file in the same directory named `.env`, type in `STRIPE_API_KEY=<
 
 **run the script** *(optional arguments are bracketed)*
 
-`python3 normalize.py [--oversight] [--verbose] [--testmode] [--testdata]`
+`python3 normalize.py [--oversight] [--verbose] [--testmode] [--testdata] [--revert]`
 
 ## notes
-* use at your own risk
+* use at your own risk 
+* automatically creates mapping of original emails to new ones, exported to a csv
+* if your customer uses different account and billing emails, this will only change their account email
 * supports manual approval of changes (with `--oversight` flag)
 * supports test data generation (with `--testdata` flag)
 * supports "test mode", in which changes are not pushed to stripe (with `--testmode` flag)
 * test mode can also be used to create a mapping, if you'd rather not replace customer data, and would instead like to access it using an external record of lowercase emails
-* creates mapping of original emails to new ones, exported to a csv
-* if your customer uses different account and billing emails, this will only change their account email
+* supports reversion of normalization, using generated mapping (with `--revert` flag)
 * PRs are welcome
